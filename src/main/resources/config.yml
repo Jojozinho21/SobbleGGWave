@@ -1,0 +1,55 @@
+# ==========================================
+#         SobbleGGWave Configuration
+# ==========================================
+
+# Prefix for plugin messages
+prefix: '&8[&b&lGGWave&8] '
+
+# Trigger word (case-insensitive, exact match)
+trigger-word: 'gg'
+
+# Wave settings
+wave:
+  size: 20          # max GGs before wave ends (min: 5, max: 200)
+  timeout: 60       # seconds before wave ends (min: 10, max: 600)
+  cooldown: 1       # seconds between player GGs (min: 1, max: 30)
+
+# Sequential colors (applied in order across wave)
+colors:
+  - '&c&l'
+  - '&6&l'
+  - '&e&l'
+  - '&a&l'
+  - '&b&l'
+  - '&d&l'
+
+# GG broadcast format
+# Placeholders: {color}, {player}
+gg-format: '{color}{player}: GG!'
+
+# Messages (all configurable)
+# Placeholders vary per message — see comments
+messages:
+  # {trigger}, {size}, {timeout}
+  wave-start: '&aUma onda de GG começou! Digite &f&l{trigger}&a no chat! ({size} GGs, {timeout}s)'
+  # {total}, {top}, {top_count}
+  wave-end-count: '&aOnda encerrada! {total} GGs enviados. Maior participante: &f{top}&a com {top_count} GGs!'
+  # {total}, {size}, {top}, {top_count}
+  wave-end-timeout: '&eOnda encerrou por tempo! {total}/{size} GGs enviados. Maior participante: &f{top}&a com {top_count} GGs!'
+  # {player}
+  first-gg: '&d>>> {player} abriu a onda com o primeiro GG!'
+  # {player}
+  last-gg: '&d<<< {player} fechou a onda com o GG final!'
+  # {remaining}
+  cooldown: '&cAguarde {remaining}s antes do próximo GG.'
+  # {current}, {size}, {remaining}
+  already-active: '&cJá existe uma onda ativa ({current}/{size} GGs, {remaining}s restantes).'
+  no-wave: '&cNenhuma onda ativa no momento.'
+  wave-started-admin: '&aVocê iniciou uma onda de GG!'
+  wave-stopped-admin: '&cVocê encerrou a onda de GG.'
+  reload: '&aConfig recarregada com sucesso!'
+  no-permission: '&cVocê não tem permissão para isso.'
+  usage: '&cUso: /ggwave <iniciar|parar|reload|status>'
+  # {current}, {size}, {remaining}, {top}, {top_count}
+  status-active: '&bOnda ativa: {current}/{size} GGs | {remaining}s restantes | Top: {top} ({top_count})'
+  status-inactive: '&7Nenhuma onda ativa.'

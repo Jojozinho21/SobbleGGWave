@@ -1,0 +1,15 @@
+name: SobbleGGWave
+version: ${project.version}
+main: com.sobblemc.sobbleggwave.SobbleGGWavePlugin
+author: Jonathan Locks
+description: Sistema de ondas de GG no chat
+
+commands:
+  ggwave:
+    description: Comandos do sistema GGWave
+    usage: /ggwave <iniciar|parar|reload|status>
+
+permissions:
+  sobbleggwave.admin:
+    description: Permite iniciar, parar e recarregar ondas de GG
+    default: op
