@@ -113,6 +113,9 @@ public class GGWaveCommand implements CommandExecutor, TabCompleter {
     }
 
     private void sendMessage(CommandSender sender, String message) {
+        if (message == null || message.isEmpty()) {
+            return;
+        }
         String prefix = this.plugin.getConfig().getString("prefix", "");
         sender.sendMessage(MessageUtil.colorize(prefix + message));
     }

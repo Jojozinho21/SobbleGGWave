@@ -16,6 +16,9 @@ public class WaveBroadcaster {
 
     public void broadcastWaveStart(int waveSize, int timeoutSeconds,
             String prefix, String msgTemplate, String triggerWord) {
+        if (msgTemplate == null || msgTemplate.isEmpty()) {
+            return;
+        }
         String message = msgTemplate;
         message = MessageUtil.replace(message, "trigger", triggerWord);
         message = MessageUtil.replace(message, "size", String.valueOf(waveSize));
@@ -26,6 +29,9 @@ public class WaveBroadcaster {
     public void broadcastWaveEnd(boolean timeout, int ggCount, int waveSize,
             String[] topInfo, String prefix, String msgTimeout, String msgCount) {
         String message = timeout ? msgTimeout : msgCount;
+        if (message == null || message.isEmpty()) {
+            return;
+        }
         message = MessageUtil.replace(message, "total", String.valueOf(ggCount));
         message = MessageUtil.replace(message, "size", String.valueOf(waveSize));
         message = MessageUtil.replace(message, "top", topInfo[0]);
@@ -35,25 +41,38 @@ public class WaveBroadcaster {
 
     public void broadcastGG(Player player, int currentCount, int waveSize,
             String color, String prefix, String ggFormat) {
+        if (ggFormat == null || ggFormat.isEmpty()) {
+            return;
+        }
         String format = ggFormat;
         format = MessageUtil.replace(format, "color", color);
         format = MessageUtil.replace(format, "player", player.getName());
-        String progress = "&7[" + currentCount + "/" + waveSize + "] ";
-        Bukkit.broadcastMessage(MessageUtil.colorize(prefix + progress + format));
+        format = MessageUtil.replace(format, "current", String.valueOf(currentCount));
+        format = MessageUtil.replace(format, "size", String.valueOf(waveSize));
+        Bukkit.broadcastMessage(MessageUtil.colorize(prefix + format));
     }
 
     public void broadcastFirstGG(Player player, String prefix, String msgTemplate) {
+        if (msgTemplate == null || msgTemplate.isEmpty()) {
+            return;
+        }
         String message = MessageUtil.replace(msgTemplate, "player", player.getName());
         Bukkit.broadcastMessage(MessageUtil.colorize(prefix + message));
     }
 
     public void broadcastLastGG(Player player, String prefix, String msgTemplate) {
+        if (msgTemplate == null || msgTemplate.isEmpty()) {
+            return;
+        }
         String message = MessageUtil.replace(msgTemplate, "player", player.getName());
         Bukkit.broadcastMessage(MessageUtil.colorize(prefix + message));
     }
 
     public void sendCooldownMessage(Player player, long remaining,
             String prefix, String msgTemplate) {
+        if (msgTemplate == null || msgTemplate.isEmpty()) {
+            return;
+        }
         String message = MessageUtil.replace(msgTemplate, "remaining", String.valueOf(remaining));
         player.sendMessage(MessageUtil.colorize(prefix + message));
     }

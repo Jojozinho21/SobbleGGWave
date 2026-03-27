@@ -1,20 +1,51 @@
-# ==========================================
-#         SobbleGGWave Configuration
-# ==========================================
+# ══════════════════════════════════════════════════════════════
+#                    SobbleGGWave - Configuração
+# ══════════════════════════════════════════════════════════════
+#
+#  Dica: qualquer mensagem com valor "" (vazio) será desativada
+#  e não aparecerá no chat. Útil para personalizar a experiência.
+#
+# ══════════════════════════════════════════════════════════════
 
-# Prefix for plugin messages
+
+# ┌─────────────────────────────────────┐
+# │           Configuração Geral        │
+# └─────────────────────────────────────┘
+
+# Prefixo exibido antes de todas as mensagens do plugin.
+# Exemplo no chat: [GGWave] Uma onda de GG começou!
 prefix: '&8[&b&lGGWave&8] '
 
-# Trigger word (case-insensitive, exact match)
+# Palavra que ativa o GG durante uma onda (case-insensitive, match exato).
+# O jogador precisa digitar exatamente essa palavra no chat.
 trigger-word: 'gg'
 
-# Wave settings
-wave:
-  size: 20          # max GGs before wave ends (min: 5, max: 200)
-  timeout: 60       # seconds before wave ends (min: 10, max: 600)
-  cooldown: 1       # seconds between player GGs (min: 1, max: 30)
 
-# Sequential colors (applied in order across wave)
+# ┌─────────────────────────────────────┐
+# │        Configuração da Onda         │
+# └─────────────────────────────────────┘
+
+wave:
+  # Quantos GGs são necessários para completar a onda.
+  # Mínimo: 5 | Máximo: 200
+  size: 20
+
+  # Tempo limite (em segundos) antes da onda encerrar automaticamente.
+  # Mínimo: 10 | Máximo: 600
+  timeout: 60
+
+  # Tempo (em segundos) que cada jogador deve esperar entre GGs.
+  # Mínimo: 1 | Máximo: 30
+  cooldown: 1
+
+
+# ┌─────────────────────────────────────┐
+# │          Cores Sequenciais          │
+# └─────────────────────────────────────┘
+
+# Cores aplicadas em ordem ao longo da onda, criando um efeito rainbow.
+# Cada cor usa códigos do Minecraft (&c = vermelho, &6 = dourado, etc.)
+# &l = negrito. Adicione ou remova cores livremente.
 colors:
   - '&c&l'
   - '&6&l'
@@ -23,33 +54,96 @@ colors:
   - '&b&l'
   - '&d&l'
 
-# GG broadcast format
-# Placeholders: {color}, {player}
+
+# ┌─────────────────────────────────────┐
+# │          Formato do GG              │
+# └─────────────────────────────────────┘
+
+# Como cada GG aparece no chat durante a onda.
+#
+# Placeholders disponíveis:
+#   {color}   - cor sequencial da onda (definida acima)
+#   {player}  - nome do jogador
+#   {current} - número do GG atual (ex: 5)
+#   {size}    - total de GGs da onda (ex: 20)
+#
+# Exemplos:
+#   '{color}{player}: GG!'                              → ✦ SplasherPvP: GG!
+#   '&7[{current}/{size}] {color}{player}: GG!'         → [5/20] ✦ SplasherPvP: GG!
+#   '{color}({current}) {player} disse GG!'              → ✦ (5) SplasherPvP disse GG!
 gg-format: '{color}{player}: GG!'
 
-# Messages (all configurable)
-# Placeholders vary per message — see comments
+
+# ┌─────────────────────────────────────┐
+# │            Mensagens                │
+# └─────────────────────────────────────┘
+#
+#  Todas as mensagens abaixo são configuráveis.
+#  Deixe "" (vazio) para desativar qualquer mensagem.
+#
+#  Os placeholders disponíveis estão listados acima de cada uma.
+
 messages:
-  # {trigger}, {size}, {timeout}
+
+  # ── Onda ──────────────────────────────
+
+  # Enviada para todos quando uma onda começa.
+  # Placeholders: {trigger}, {size}, {timeout}
   wave-start: '&aUma onda de GG começou! Digite &f&l{trigger}&a no chat! ({size} GGs, {timeout}s)'
-  # {total}, {top}, {top_count}
+
+  # Enviada para todos quando a onda completa por GGs.
+  # Placeholders: {total}, {top}, {top_count}
   wave-end-count: '&aOnda encerrada! {total} GGs enviados. Maior participante: &f{top}&a com {top_count} GGs!'
-  # {total}, {size}, {top}, {top_count}
+
+  # Enviada para todos quando a onda encerra por tempo.
+  # Placeholders: {total}, {size}, {top}, {top_count}
   wave-end-timeout: '&eOnda encerrou por tempo! {total}/{size} GGs enviados. Maior participante: &f{top}&a com {top_count} GGs!'
-  # {player}
+
+  # ── Destaques ─────────────────────────
+
+  # Enviada para todos quando o primeiro GG da onda é enviado.
+  # Placeholders: {player}
   first-gg: '&d>>> {player} abriu a onda com o primeiro GG!'
-  # {player}
+
+  # Enviada para todos quando o último GG completa a onda.
+  # Placeholders: {player}
   last-gg: '&d<<< {player} fechou a onda com o GG final!'
-  # {remaining}
+
+  # ── Jogador ───────────────────────────
+
+  # Enviada apenas ao jogador que está em cooldown.
+  # Placeholders: {remaining}
   cooldown: '&cAguarde {remaining}s antes do próximo GG.'
-  # {current}, {size}, {remaining}
+
+  # ── Admin ─────────────────────────────
+
+  # Enviada ao admin quando tenta iniciar com onda já ativa.
+  # Placeholders: {current}, {size}, {remaining}
   already-active: '&cJá existe uma onda ativa ({current}/{size} GGs, {remaining}s restantes).'
+
+  # Enviada ao admin quando não há onda ativa para parar.
   no-wave: '&cNenhuma onda ativa no momento.'
+
+  # Enviada ao admin após iniciar uma onda.
   wave-started-admin: '&aVocê iniciou uma onda de GG!'
+
+  # Enviada ao admin após parar uma onda.
   wave-stopped-admin: '&cVocê encerrou a onda de GG.'
+
+  # Enviada ao admin após recarregar a config.
   reload: '&aConfig recarregada com sucesso!'
+
+  # Enviada quando o jogador não tem permissão.
   no-permission: '&cVocê não tem permissão para isso.'
+
+  # Enviada quando o comando é usado incorretamente.
   usage: '&cUso: /ggwave <iniciar|parar|reload|status>'
-  # {current}, {size}, {remaining}, {top}, {top_count}
+
+  # ── Status ────────────────────────────
+
+  # Enviada ao usar /ggwave status com onda ativa.
+  # Placeholders: {current}, {size}, {remaining}, {top}, {top_count}
   status-active: '&bOnda ativa: {current}/{size} GGs | {remaining}s restantes | Top: {top} ({top_count})'
+
+  # Enviada ao usar /ggwave status sem onda ativa.
   status-inactive: '&7Nenhuma onda ativa.'
